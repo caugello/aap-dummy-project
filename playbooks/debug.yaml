@@ -1,0 +1,10 @@
+- name: Debug Fact Caching Configuration
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Show active cache plugin
+      debug:
+        msg:
+          - "Cache Plugin: {{ lookup('config', 'fact_caching') }}"
+          - "Cache Connection: {{ lookup('config', 'fact_caching_connection') }}"
+          - "Cache Timeout: {{ lookup('config', 'fact_caching_timeout') }}"
