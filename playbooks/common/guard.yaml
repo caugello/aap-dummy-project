@@ -1,0 +1,7 @@
+- name: "Wait for lock to be released"
+  setup:
+    filter: ansible_facts
+  register: fact_check
+  until: ansible_facts['is_busy'] | default(false) == false
+  retries: 20
+  delay: 30

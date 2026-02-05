@@ -1,0 +1,33 @@
+---
+- name: Dummy Install & Reboot
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - include_tasks: common/guard.yaml
+
+    - name: Lock host for current job
+      set_fact:
+        is_busy: true
+        cacheable: yes
+
+    - name: Run tasks
+      block:
+        - name: Installing Security Patches
+          ansible.builtin.pause:
+            seconds: 10
+
+        - name: Triggering System Reboot
+          ansible.builtin.debug:
+            msg: "System is going down for a 3-minute reboot..."
+
+        - name: 3-minute 'Reboot' period
+          ansible.builtin.pause:
+            minutes: 3
+            prompt: "Startup for {{ inventory_hostname }}"
+
+      always:
+        - name: Release host lock
+          set_fact:
+            is_busy: false
+            cacheable: yes
