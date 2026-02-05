@@ -1,7 +1,11 @@
-- name: Inspect EE Environment
+- name: Force Inspect EE Environment
   hosts: localhost
   gather_facts: no
   tasks:
-    - name: Dump Environment Variables
-      debug:
-        msg: "{{ ansible_env }}"
+    - name: Get Environment Variables via Shell
+      ansible.builtin.shell: env
+      register: shell_env
+
+    - name: Show Caching Variables
+      ansible.builtin.debug:
+        msg: "{{ shell_env.stdout_lines | select('search', 'ANSIBLE_') | list }}"
