@@ -1,0 +1,20 @@
+- name: Handle busy state
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: "Set busy host"
+      community.general.redis_data:
+        login_host: "{{ redis_host}}"
+        login_password: "{{ redis_password }}"
+        key: "busy_{{ inventory_hostname }}"
+        value: "yes"
+        non_existing: true # only set if key is not defined
+        expiration: 300000 # auto-expires after 5mins
+        state: present
+        validate_certs: false
+        tls: false
+      register: host_busy
+      delegate_to: localhost
+      until: host_busy.changed
+      retries: "{{ redis_retry }}"
+      delay: 1

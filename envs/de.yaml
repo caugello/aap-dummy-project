@@ -1,0 +1,32 @@
+version: 3
+
+images:
+  base_image:
+    name: "registry.redhat.io/ansible-automation-platform-25/de-minimal-rhel9:latest"
+
+dependencies:
+  ansible_core:
+    package_pip: "ansible-core"
+  ansible_runner:
+    package_pip: "ansible-runner"
+
+  galaxy:
+    collections:
+      - ansible.eda
+  python:
+    - six
+    - psutil
+    - aiohttp
+    - systemd-python
+  system:
+    - iputils [platform:rpm]
+    - pkgconf-pkg-config [platform:rpm]
+    - systemd-devel [platform:rpm]
+    - gcc [platform:rpm]
+    - python3.9-devel [platform:rpm]
+
+  python_interpreter:
+    package_system: "python3.9"
+
+options:
+  package_manager_path: /usr/bin/microdnf

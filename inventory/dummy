@@ -1,0 +1,2 @@
+[all]
+192.168.70.9[5:7] ansible_user=root

@@ -1,0 +1,7 @@
+- name: Dummy non-blocking
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: "Doing non-blocking things"
+      ansible.builtin.pause:
+        seconds: 60

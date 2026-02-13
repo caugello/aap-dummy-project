@@ -1,0 +1,13 @@
+- name: Remove busy state
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: "Unset busy host"
+      community.general.redis_data:
+        login_host: "{{ redis_host}}"
+        login_password: "{{ redis_password }}"
+        key: "busy_{{ inventory_hostname }}"
+        state: absent
+        validate_certs: false
+        tls: false
+      delegate_to: localhost

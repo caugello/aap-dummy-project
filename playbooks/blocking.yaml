@@ -1,0 +1,17 @@
+---
+- name: Dummy Install & Reboot
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Installing patches
+      ansible.builtin.pause:
+        seconds: 10
+
+    - name: Triggering system reboot
+      ansible.builtin.debug:
+        msg: "System reboot: 1min"
+
+    - name: 1-minute 'Reboot'
+      ansible.builtin.pause:
+        minutes: 1
+        prompt: "Startup {{ inventory_hostname }}"
